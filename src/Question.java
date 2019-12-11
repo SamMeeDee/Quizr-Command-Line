@@ -2,30 +2,23 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.lang.NumberFormatException;
 
-public class Question {
+public abstract class Question {
 
     protected StringBuffer questionText;
     protected StringBuffer[] answerChoices;
     protected String outOfRangeMsg = "Invalid Input: Option selected does not exist.";
-    protected int correctAnswer;
 
     public Question(){
-        setQuestionText();
-        setNumChoices(4);
-        setAnswerChoices();
+
     }
 
     public StringBuffer getQuestionText() { return this.questionText; }
 
     public StringBuffer[] getAnswerChoices() { return this.answerChoices; }
 
-    public int getCorrectAnswer() {
-        return correctAnswer;
-    }
-
     protected String getChoicesTxt () {
         StringBuffer choicesString=new StringBuffer();
-        for (int i = 0; i < this.answerChoices.length-1; i++) {
+        for (int i = 0; i < this.answerChoices.length; i++) {
             choicesString.append(this.answerChoices[i]).append("\n");
         }
         return choicesString.toString();
@@ -66,16 +59,10 @@ public class Question {
 
         for (int i = 0; i < answerChoices.length; i++) {
             System.out.println("Please enter the value for answer choice #"+(i+1)+": ");
-            answerChoices[i]=new StringBuffer(i+") "+keyboard.nextLine());
+            answerChoices[i]=new StringBuffer((i+1)+") "+keyboard.nextLine());
         }
 
         System.out.println("Answer Choices:\n"+getChoicesTxt());
-    }
-
-    public void setCorrectAnswer() {
-        System.out.println(this.toString());
-        this.correctAnswer = takeNumericInput("Please enter the number of the correct answer for this question: ",answerChoices.length,outOfRangeMsg);
-        System.out.println("The correct answer is "+answerChoices[correctAnswer]);
     }
 
     public void editQuestion() {
@@ -129,7 +116,7 @@ public class Question {
     }
 
     @Override
-    public String toString() { return this.questionText+"\n"+getChoicesTxt(); }
+    public String toString() { return this.questionText+"\n"+getChoicesTxt()+"\n"; }
 }
 
 

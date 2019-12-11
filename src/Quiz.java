@@ -32,7 +32,7 @@ public class Quiz {
 
     public StringBuffer getQuizText() {
         StringBuffer text=new StringBuffer("Name: "+this.name+"\nDescription: "+this.description+"\n\nQuestions:\n");
-        for (int i = 0; i < questions.length-1; i++) {
+        for (int i = 0; i < questions.length; i++) {
             text.append(i + 1).append(". ").append(questions[i].toString());
         }
         return text;
@@ -71,10 +71,18 @@ public class Quiz {
     }
 
     private void setQuestions() {
-        int num = takeNumericInput("Please enter the number of questions this quiz will have (minimum is 1): ", questions.length, outOfRangeMsg);
+        int num = takeNumericInput("Please enter the number of questions this quiz will have (minimum is 1): ", 10, outOfRangeMsg);
         questions = new Question[num];
         invalidQuestNumMsg="Invalid Input: There is no question "+num+'.';
-        for (int i = 0; i < num-1; i++) {questions[i]=new Question();}
+        for (int i = 0; i < num; i++) {
+            switch (takeNumericInput("Please choose type of question:\n1)Single Answer\n2)Multi Answer",2,outOfRangeMsg)){
+                case 1: questions[i]=new SingleAnswerQuest();
+                        break;
+                case 2: questions[i]=new MultiAnswerQuest();
+                        break;
+                default: break;
+            }
+        }
     }
 
     public void editQuestion() {
@@ -126,7 +134,7 @@ public class Quiz {
                 continue;
             }
 
-            if ((userInput > 0) && (userInput < maxValue)) {isValid=true;}
+            if ((userInput > 0) && (userInput <= maxValue)) {isValid=true;}
             else {System.out.println(errorMsg); isValid=false;}
         }
 
