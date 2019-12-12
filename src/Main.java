@@ -1,14 +1,12 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main (String[] args){
         Scanner keyboard = new Scanner(System.in);
         boolean isDone=false;
-        StringBuffer quizList = new StringBuffer();
         ArrayList<Quiz> quizzes= new ArrayList<>();
-        String outOfRangeMsg = "Invalid Input: Option selected does not exist.";
+        String outOfRangeMsg = "Invalid Input: Option selected does not exist.\n";
 
         System.out.println("   ____        _           ");
         System.out.println("  / __ \\__  __(_)___  _____");
@@ -19,20 +17,22 @@ public class Main {
         System.out.println("Welcome to Quizr.\n");
 
         while(!isDone){
-            int makeOrTake = takeNumericInput("What would you like to do?\n1) Make a Quiz\n2) Edit a Quiz\n3) Take a Quiz\n4) Exit Quizr", 4, outOfRangeMsg);
+            int makeOrTake = takeNumericInput("What would you like to do?\n1) Make a Quiz\n2) Edit a Quiz\n3) Take a Quiz\n4) Exit Quizr\n", 4, outOfRangeMsg);
             StringBuffer tmp;
             switch(makeOrTake){
                 case 1: quizzes.add(new Quiz());
-                        quizList=null; quizList=getQuizList(quizzes);
                         break;
                 case 2:
                     if(quizzes.size()==0){ System.out.println("No quizzes to edit"); }
-                    else { quizzes.get(takeNumericInput("Please choose a quiz to edit:\n"+quizList.toString(),quizzes.size(),outOfRangeMsg)).editQuiz(); }
+                    else { quizzes.get(takeNumericInput("Please choose a quiz to edit:\n"+getQuizList(quizzes).toString(),quizzes.size(),outOfRangeMsg)-1).editQuiz(); }
                     break;
                 case 3:
                     if(quizzes.size()==0){ System.out.println("No quizzes to edit"); }
-                    else{ takeAQuiz(quizzes.get(takeNumericInput("Please choose a quiz to take:\n"+quizList.toString(),quizzes.size(),outOfRangeMsg))); }
+                    else{ takeAQuiz(quizzes.get(takeNumericInput("Please choose a quiz to take:\n"+getQuizList(quizzes).toString(),quizzes.size(),outOfRangeMsg)-1)); }
                     break;
+                case 4:
+                    System.out.println("Thank you for using Quizr!!!");
+                    return;
                 default:
                     break;
             }
@@ -103,57 +103,54 @@ public class Main {
     private static void takeAQuiz(Quiz quiz){
         Scanner keyboard = new Scanner(System.in);
         Question[] questions=quiz.getQuestions();
-        SingleAnswerQuest saq;
-        MultiAnswerQuest maq;
         int userChoice;
-        int[] userChoices;
+        List<Integer> userChoices;
         int score=0;
-        String yesNo=null;
         boolean isDone=false;
-        String choiceDoesNotExistMsg = "Invalid Input: That is not a valid answer choice";
-        String correctAnswerMsg = "That's Correct!!!";
-        String incorrectAnswerMsg = "Sorry, that's not correct.";
+        String choiceDoesNotExistMsg = "Invalid Input: That is not a valid answer choice\n";
+        String correctAnswerMsg = "That's Correct!!!\n";
+        String incorrectAnswerMsg = "Sorry, that's not correct.\n";
 
         while (!isDone) {
-            System.out.println("Quiz Name: "+quiz.getName()+"\nQuiz Description: "+quiz.getDescription()+"");
+            System.out.println("Quiz Name: "+quiz.getName()+"\nQuiz Description: "+quiz.getDescription()+"\n");
 
-            for (int i = 0; i < questions.length; i++) {
-                if (questions[i] instanceof MultiAnswerQuest) {
-                    maq=(MultiAnswerQuest) questions[i];
-                    userChoices=takeNumericArrayInput(maq.toString(),maq.getAnswerChoices().length,choiceDoesNotExistMsg);
-
-                    if (userChoices.length!=maq.getCorrectAnswers().length){
-                        System.out.println("That's incorrect!! You left out one or more other correct answers.");
-                    }
-
-                    if (userChoices.toString().equals(maq.getCorrectAnswers().toString())){
+            for (Question question : questions) {
+                if (question instanceof MultiAnswerQuest) {
+                    MultiAnswerQuest maq = (MultiAnswerQuest) question;
+                    userChoices = Arrays.stream(takeNumericArrayInput(maq.toString(), maq.getAnswerChoices().length, choiceDoesNotExistMsg))
+                            .boxed()
+                            .collect(Collectors.toList());
+                    if (userChoices.size() != maq.getCorrectAnswers().size()) {
+                        System.out.println("That's incorrect. You entered the wrong number of choices.\n");
+                    } else if (userChoices.containsAll(maq.getCorrectAnswers())) {
                         System.out.println(correctAnswerMsg);
                         score++;
                     } else {
-                        System.out.println("That's incorrect!! One or more of your choices was not a correct answer.");
+                        System.out.println("That's incorrect!! One or more of your choices was not a correct answer.\n");
                     }
-                }
-                else if (questions[i] instanceof SingleAnswerQuest) {
-                    saq=(SingleAnswerQuest) questions[i];
-                    userChoice=takeNumericInput(saq.toString(),saq.getAnswerChoices().length,choiceDoesNotExistMsg);
-                    if (userChoice==saq.correctAnswer){ System.out.println(correctAnswerMsg); score++; }
-                    else { System.out.println(incorrectAnswerMsg); }
+                } else if (question instanceof SingleAnswerQuest) {
+                    SingleAnswerQuest saq = (SingleAnswerQuest) question;
+                    userChoice = takeNumericInput(saq.toString(), saq.getAnswerChoices().length, choiceDoesNotExistMsg);
+                    if (userChoice == saq.correctAnswer) {
+                        System.out.println(correctAnswerMsg);
+                        score++;
+                    } else {
+                        System.out.println(incorrectAnswerMsg);
+                    }
                 }
 
 
             }
 
-            System.out.println("Quiz Completed.\nYou got "+score+"out of "+questions.length+".");
+            System.out.println("Quiz Completed.\nYou got "+score+" out of "+questions.length+".\n");
             System.out.println("Would you like to try again? Yes/No");
-            yesNo=keyboard.next();
-
-            if (yesNo.equals("Yes")){isDone=false;} else {isDone=true;}
+            isDone=!"Yes".equals(keyboard.next());
         }
     }
 
     private static StringBuffer getQuizList(ArrayList<Quiz> quizzes) {
         StringBuffer output=new StringBuffer();
-        quizzes.forEach(quiz -> output.append((quizzes.indexOf(quiz)+1)+". "+quiz.getName()+"\n"));
+        quizzes.forEach(quiz -> output.append(quizzes.indexOf(quiz) + 1).append(". ").append(quiz.getName()).append("\n"));
         return output;
     }
 }

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class SingleAnswerQuest extends Question {
-    int correctAnswer;
+    protected int correctAnswer;
 
     public SingleAnswerQuest(){
         setQuestionText();

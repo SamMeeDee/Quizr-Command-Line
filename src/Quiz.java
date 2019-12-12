@@ -1,14 +1,12 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.lang.NumberFormatException;
 
 public class Quiz {
     private StringBuffer name=null;
     private StringBuffer description=null;
     private Question[] questions;
-    private String outOfRangeMsg = "Invalid Input: Number of questions must be between 1 and 10.";
+    private String outOfRangeMsg = "Invalid Input: Number of questions must be between 1 and 10.\n";
+    private String invalidChoiceMsg = "Invalid Input: Option selected does not exist.\n";
     private String invalidQuestNumMsg;
 
     public Quiz(){
@@ -39,8 +37,7 @@ public class Quiz {
     }
 
     private Question getQuestion() {
-        int num=0;
-        num=takeNumericInput("Please enter question number: ",questions.length,invalidQuestNumMsg);
+        int num = takeNumericInput("Please enter question number: ", questions.length, invalidQuestNumMsg);
         return questions[num-1];
     }
 
@@ -75,7 +72,7 @@ public class Quiz {
         questions = new Question[num];
         invalidQuestNumMsg="Invalid Input: There is no question "+num+'.';
         for (int i = 0; i < num; i++) {
-            switch (takeNumericInput("Please choose type of question:\n1)Single Answer\n2)Multi Answer",2,outOfRangeMsg)){
+            switch (takeNumericInput("Please choose type of question:\n1)Single Answer\n2)Multi Answer",2,invalidChoiceMsg)){
                 case 1: questions[i]=new SingleAnswerQuest();
                         break;
                 case 2: questions[i]=new MultiAnswerQuest();
@@ -93,26 +90,23 @@ public class Quiz {
     public void editQuiz() {
         Scanner keyboard=new Scanner(System.in);
         boolean imDone=false;
-        StringBuffer isDone=null;
-        int num=0;
+        String isDone="No";
+        int num;
 
         while (!imDone) {
-            num=takeNumericInput("What would you like to edit?\n1) Name\n2) Description\n3) Questions\nPress 0 to cancel.",3,this.outOfRangeMsg);
+            num=takeNumericInput("What would you like to edit?\n1) Name\n2) Description\n3) Questions\n4) Go Back.",4,this.invalidChoiceMsg);
             switch(num){
-                case 1: setName();
-                    break;
-                case 2: setDescription();
-                    break;
-                case 3: editQuestion();
-                default: imDone=true; isDone=new StringBuffer("Yes"); break;
+                case 1: setName(); break;
+                case 2: setDescription(); break;
+                case 3: editQuestion(); break;
+                case 4: imDone=true; isDone="Yes"; break;
             }
 
-            while ((!isDone.equals("Yes")) && (!isDone.equals("No"))){
-                System.out.println("Are you done editing this question? Yes/No");
-                isDone=new StringBuffer(keyboard.nextLine());
+            while (!isDone.equals("Yes")){
+                System.out.println("Are you done editing this quiz? Yes/No");
+                isDone=keyboard.nextLine();
                 if (isDone.equals("Yes")){imDone=true;}
                 else if (isDone.equals("No")){break;}
-                else continue;
             }
         }
     }
