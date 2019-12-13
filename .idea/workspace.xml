@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe6af8cf-4715-457e-a2b9-ea15d82cd277" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/json-20190722.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quizr.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Quizr.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MultiAnswerQuest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultiAnswerQuest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Question.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quiz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SingleAnswerQuest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleAnswerQuest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,9 +69,17 @@
       </list>
     </option>
   </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_FIELDS" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -137,14 +139,18 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="277" y="0" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1576189330852" />
-    <state x="465" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1576173530521">
+    <state x="465" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1576259697704">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="465" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1576173530521" />
+    <state x="465" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1576259697704" />
     <state x="436" y="37" key="new project wizard" timestamp="1575675196070">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="436" y="37" key="new project wizard/0.0.1536.834@0.0.1536.834" timestamp="1575675196070" />
+    <state x="425" y="189" key="run.anything.popup" timestamp="1576190621087">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="425" y="189" key="run.anything.popup/0.0.1536.834@0.0.1536.834" timestamp="1576190621087" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1576099311250">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
