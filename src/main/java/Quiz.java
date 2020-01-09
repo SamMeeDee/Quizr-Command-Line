@@ -13,6 +13,8 @@ public class Quiz {
         setQuestions(questions);
     }
 
+    public Quiz(){}
+
     public String getName() { return name; }
 
     public String getDescription() { return description; }

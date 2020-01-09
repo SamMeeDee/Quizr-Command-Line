@@ -1,9 +1,17 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
 
-    public static void main (String[] args){
-        Scanner keyboard = new Scanner(System.in);
+    public static void main (String[] args) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        File quizFile=new File("quizzes.json");
+        boolean saveOnExit=true;
         boolean isDone=false;
         ArrayList<Quiz> quizzes= new ArrayList<>();
         String outOfRangeMsg = "Invalid Input: Option selected does not exist.\n";
@@ -15,6 +23,29 @@ public class Main {
         System.out.println("\\___\\_\\__,_/_/ /___/_/     ");
 
         System.out.println("Welcome to Quizr.\n");
+
+        if (quizFile.exists()){
+            System.out.println("Loading quizzes from storage, please wait...\n");
+            try {
+                quizzes=mapper.readValue(quizFile,new TypeReference<ArrayList<Quiz>>(){});
+            } catch (IOException e) {
+                System.out.println("There was an issue loading the saved quizzes." +
+                        "\nYou can continue to use Quizr and manually create any quizzes you need," +
+                        "\nbut none of them will be saved when you close the app." +
+                        "\nOr you can restart Quizr to see if that fixes the problem.");
+                saveOnExit=false;
+            }
+        } else {
+            System.out.println("No saved quizzes detected, creating new file...");
+            File file = new File("quizzes.json");
+            try {
+                if(file.createNewFile()){ System.out.println("Quiz file created!!"); }
+                else {System.out.println("Quiz file was not created, any work during this session will not be saved."); saveOnExit=false;}
+            } catch (IOException e) {
+                System.out.println("Quiz file was not created, any work during this session will not be saved.");
+                saveOnExit=false;
+            }
+        }
 
         while(!isDone){
             int makeOrTake = takeNumericInput("What would you like to do?\n1) Make a Quiz\n2) Edit a Quiz\n3) Take a Quiz\n4) Exit Quizr\n", 4, outOfRangeMsg);
@@ -30,6 +61,11 @@ public class Main {
                     else{ takeAQuiz(quizzes.get(takeNumericInput("\nPlease choose a quiz to take:\n"+makeQuizList(quizzes).toString(),quizzes.size(),outOfRangeMsg)-1)); }
                     break;
                 case 4:
+                    if (saveOnExit){
+                        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+                        System.out.println("Saving quizzes...");
+                        mapper.writeValue(quizFile,quizzes);
+                    }
                     System.out.println("Thank you for using Quizr!!!");
                     return;
             }

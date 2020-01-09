@@ -1,0 +1,49 @@
+[ {
+  "name" : "My First Quiz",
+  "description" : "This is my first quiz!!",
+  "questions" : [ {
+    "questionText" : "8x2=?",
+    "answerChoices" : [ "4", "8", "12", "16" ],
+    "correctAnswer" : 4
+  }, {
+    "questionText" : "What is the color of the sky?",
+    "answerChoices" : [ "Red", "Green", "Blue", "Yellow" ],
+    "correctAnswer" : 3
+  }, {
+    "questionText" : "What is the color of the grass?",
+    "answerChoices" : [ "Red", "Green", "Blue", "Yellow" ],
+    "correctAnswer" : 2
+  } ]
+}, {
+  "name" : "My Second Quiz",
+  "description" : "This is my second quiz!!",
+  "questions" : [ {
+    "questionText" : "4+4=?",
+    "answerChoices" : [ "4", "2", "8", "10" ],
+    "correctAnswer" : 3
+  }, {
+    "questionText" : "What is the color of blood?",
+    "answerChoices" : [ "Yellow", "Blue", "Red", "Green" ],
+    "correctAnswer" : 3
+  }, {
+    "questionText" : "What is the color of a lemon",
+    "answerChoices" : [ "Red", "Green", "Blue", "Yellow" ],
+    "correctAnswer" : 4
+  } ]
+}, {
+  "name" : "My Third Quiz",
+  "description" : "This is my third quiz!!",
+  "questions" : [ {
+    "questionText" : "5+5=?",
+    "answerChoices" : [ "4", "2", "8", "10" ],
+    "correctAnswer" : 4
+  }, {
+    "questionText" : "What is the color of the ocean?",
+    "answerChoices" : [ "Red", "Green", "Blue", "Yellow" ],
+    "correctAnswer" : 3
+  }, {
+    "questionText" : "What is the color of a lime",
+    "answerChoices" : [ "Red", "Green", "Blue", "Yellow" ],
+    "correctAnswer" : 2
+  } ]
+} ]

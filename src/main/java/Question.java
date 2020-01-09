@@ -15,6 +15,8 @@ public class Question {
         setCorrectAnswer(correctAnswer);
     }
 
+    public Question(){}
+
     public String getQuestionText() { return this.questionText; }
 
     public String[] getAnswerChoices() { return this.answerChoices; }
