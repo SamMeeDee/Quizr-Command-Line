@@ -68,10 +68,10 @@ public class Quiz {
         }
     }
 
-    private StringBuffer makeQuizText() {
+    private String makeQuizText() {
         StringBuffer text=new StringBuffer("Name: "+this.name+"\nDescription: "+this.description+"\n\nQuestions:\n");
         for (int i = 0; i < questions.length; i++) { text.append(i + 1).append(". ").append(questions[i].toString()); }
-        return text;
+        return text.toString();
     }
 
     private StringBuffer makeQuestionsList() {

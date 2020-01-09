@@ -4,10 +4,10 @@ import java.lang.NumberFormatException;
 
 public class Question {
 
-    protected String questionText;
-    protected String[] answerChoices;
-    protected int correctAnswer;
-    protected final String outOfRangeMsg = "Invalid Input: Option selected does not exist.";
+    private String questionText;
+    private String[] answerChoices;
+    private int correctAnswer;
+    private final String outOfRangeMsg = "Invalid Input: Option selected does not exist.";
 
     public Question(String questionText, String[] answerChoices, int correctAnswer){
         setQuestionText(questionText);
